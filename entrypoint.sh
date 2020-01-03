@@ -3,14 +3,24 @@
 cd "${GITHUB_WORKSPACE}" \
   || (echo "Workspace is unavailable" >&2; exit 1)
 
-
 . /usr/ros/${ROS_DISTRO}/setup.sh
 
 set -eu
 
 
+if [ ! -z ${INPUT_ISSUE_TITLE:-} ]
+then
+  if [ -z ${INPUT_VERSION:-} ]
+  then
+    echo "Both issue_title and version are specified" >&2
+    exit 1
+  fi
+  INPUT_VERSION=$(echo ${INPUT_ISSUE_TITLE} | sed -e 's/^Release \(.*\)$/\1/')
+fi
+
+
 # Setup
-echo -e "machine github.com\nlogin ${GITHUB_TOKEN}" > ~/.netrc
+echo -e "machine github.com\nlogin ${INPUT_GITHUB_TOKEN}" > ~/.netrc
 git config user.name ${INPUT_GIT_USER}
 git config user.email ${INPUT_GIT_EMAIL}
 

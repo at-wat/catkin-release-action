@@ -1,14 +1,20 @@
 name: "Catkin release candidate"
 description: "Create ROS package release candidate branch"
 inputs:
-  version:
-    description: "New package version"
+  github_token:
+    description: 'GITHUB_TOKEN.'
     required: true
+  version:
+    description: "New package version. One of version and issue_title must be specified."
+    required: false
+  issue_title:
+    description: "Issue title containing new package version. One of version and issue_title must be specified."
+    required: false
   git_user:
-    description: "User name of commit author"
+    description: "User name of commit author."
     required: true
   git_email:
-    description: "E-mail address of commit author"
+    description: "E-mail address of commit author."
     required: true
 runs:
   using: "docker"
