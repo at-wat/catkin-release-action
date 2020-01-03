@@ -1,6 +1,6 @@
 # catkin-release-action
 
-Create ROS package release candidate branch.
+GitHub Action to create a ROS package release candidate branch.
 
 ## Inputs
 <dl>

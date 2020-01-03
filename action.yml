@@ -1,5 +1,5 @@
 name: "Catkin release candidate"
-description: "Create ROS package release candidate branch"
+description: "Create a ROS package release candidate branch"
 inputs:
   github_token:
     description: 'GITHUB_TOKEN.'
