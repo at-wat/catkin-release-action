@@ -27,7 +27,6 @@ git config user.email ${INPUT_GIT_EMAIL}
 # Fetch all history to generate changelog
 git fetch --prune --unshallow
 
-git branch pr-base
 git checkout -b release-${INPUT_VERSION}
 
 # Update CHANGELOG
@@ -45,9 +44,19 @@ catkin_prepare_release -y --no-push --version ${INPUT_VERSION}
 git tag -d ${INPUT_VERSION}
 
 # Show
-git log pr-base..HEAD
+git log ${GITHUB_REF}..HEAD
 
 # Push
 git push origin release-${INPUT_VERSION}
 
 echo "::set-output name=created_branch::release-${INPUT_VERSION}"
+
+# Clean-up
+if [[ "${GITHUB_REF}" == refs/heads/* ]]
+then
+  git checkout ${GITHUB_REF}
+else
+  # Detach head to work with repo-sync/pull-request
+  git checkout refs/heads/${GITHUB_REF}
+fi
+git branch -D release-${INPUT_VERSION}
