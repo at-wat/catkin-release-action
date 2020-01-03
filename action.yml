@@ -16,6 +16,9 @@ inputs:
   git_email:
     description: "E-mail address of commit author."
     required: true
+outputs:
+  created_branch:
+    description: "Created branch of the release candidate."
 runs:
   using: "docker"
   image: "Dockerfile"

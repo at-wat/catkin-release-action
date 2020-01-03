@@ -49,3 +49,5 @@ git log pr-base..HEAD
 
 # Push
 git push origin release-${INPUT_VERSION}
+
+echo "::set-output name=created_branch::release-${INPUT_VERSION}"
