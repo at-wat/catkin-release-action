@@ -1,6 +1,25 @@
 # catkin-release-action
 
-## example
+GitHub Action to create a ROS package release candidate branch.
+
+## Inputs
+<dl>
+  <dt>github_token</dt> <dd>GITHUB_TOKEN. (required)</dd>
+  <dt>version</dt> <dd>New package version. One of version and issue_title must be specified.</dd>
+  <dt>issue_title</dt> <dd>Issue title containing new package version. One of version and issue_title must be specified.</dd>
+  <dt>git_user</dt> <dd>User name of commit author. (required)</dd>
+  <dt>git_email</dt> <dd>E-mail address of commit author. (required)</dd>
+</dl>
+
+## Outputs
+<dl>
+  <dt>created_branch</dt> <dd>Created branch of the release candidate.</dd>
+  <dt>version</dt> <dd>Created release version.</dd>
+</dl>
+
+## Example
+
+Following example creates a release candidate branch with CHANGELOG.rst and open a pull-request.
 
 ```yaml
 name: release-candidate
