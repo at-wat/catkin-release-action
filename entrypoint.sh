@@ -50,6 +50,7 @@ git log ${GITHUB_REF}..HEAD
 git push origin release-${INPUT_VERSION}
 
 echo "::set-output name=created_branch::release-${INPUT_VERSION}"
+echo "::set-output name=version::${INPUT_VERSION}"
 
 # Clean-up
 if [[ "${GITHUB_REF}" == refs/heads/* ]]

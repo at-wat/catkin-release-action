@@ -19,6 +19,8 @@ inputs:
 outputs:
   created_branch:
     description: "Created branch of the release candidate."
+  version:
+    description: "Created release version."
 runs:
   using: "docker"
   image: "Dockerfile"
