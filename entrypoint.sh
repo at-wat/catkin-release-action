@@ -38,4 +38,4 @@ git tag -d ${INPUT_VERSION}
 git log pr-base..HEAD
 
 # Push
-echo git push origin release-${INPUT_VERSION}
+git push origin release-${INPUT_VERSION}
