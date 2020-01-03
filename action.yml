@@ -1,0 +1,18 @@
+name: "Catkin release candidate"
+description: "Create ROS package release candidate branch"
+inputs:
+  version:
+    description: "New package version"
+    required: true
+  git_user:
+    description: "User name of commit author"
+    required: true
+  git_email:
+    description: "E-mail address of commit author"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "git-pull-request"
+  color: "red"
