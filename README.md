@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
       - name: create release
         id: create_release
-        uses: at-wat/catkin-release-action@v0
+        uses: at-wat/catkin-release-action@v1.0.0
         with:
           issue_title: ${{ github.event.issue.title }}
           git_user: @@MAINTAINER_LOGIN@@
