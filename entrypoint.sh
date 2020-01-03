@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 cd "${GITHUB_WORKSPACE}" \
   || (echo "Workspace is unavailable" >&2; exit 1)
 
-. /usr/ros/${ROS_DISTRO}/setup.sh
+. /usr/ros/${ROS_DISTRO}/setup.bash
 
 set -eu
 
 
-if [ ! -z ${INPUT_ISSUE_TITLE:-} ]
+if [ ! -z "${INPUT_ISSUE_TITLE:-}" ]
 then
-  if [ -z ${INPUT_VERSION:-} ]
+  if [ ! -z "${INPUT_VERSION:-}" ]
   then
     echo "Both issue_title and version are specified" >&2
     exit 1
