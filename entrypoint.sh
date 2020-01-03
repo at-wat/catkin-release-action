@@ -14,6 +14,9 @@ echo -e "machine github.com\nlogin ${GITHUB_TOKEN}" > ~/.netrc
 git config user.name ${INPUT_GIT_USER}
 git config user.email ${INPUT_GIT_EMAIL}
 
+# Fetch all history to generate changelog
+git fetch --prune --unshallow
+
 git branch pr-base
 git checkout -b release-${INPUT_VERSION}
 
