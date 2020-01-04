@@ -18,6 +18,17 @@ then
   INPUT_VERSION=$(echo ${INPUT_ISSUE_TITLE} | sed -e 's/^Release \(.*\)$/\1/')
 fi
 
+# Check duplication
+if ! git ls-remote --exit-code origin ${version}
+then
+  echo "Release already exists. Nothing to do." >&2
+  exit 0
+fi
+if ! git ls-remote --exit-code origin release-${version}
+then
+  echo "Release candidate branch already exists. Nothing to do." >&2
+  exit 0
+fi
 
 # Setup
 echo -e "machine github.com\nlogin ${INPUT_GITHUB_TOKEN}" > ~/.netrc
