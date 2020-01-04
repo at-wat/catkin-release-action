@@ -24,10 +24,12 @@ then
   echo "Release already exists. Nothing to do." >&2
   exit 0
 fi
+
+update=false
 if ! git ls-remote --exit-code origin release-${version}
 then
-  echo "Release candidate branch already exists. Nothing to do." >&2
-  exit 0
+  echo "Release candidate branch already exists. Updating." >&2
+  update=true
 fi
 
 # Setup
@@ -38,10 +40,23 @@ git config user.email ${INPUT_GIT_EMAIL}
 # Fetch all history to generate changelog
 git fetch --tags --prune --unshallow
 
-git checkout -b release-${INPUT_VERSION}
-
 # Update CHANGELOG
 catkin_generate_changelog -y
+
+if update
+then
+  # Store updated CHANGELOGs
+  git stash
+
+  # Update release candidate branch
+  git checkout release-${INPUT_VERSION}
+  git merge --no-edit ${GITHUB_REF}
+
+  # Overwrite CHANGELOGs
+  git checkout stash@{0} $(find . -name CHANGELOG.rst)
+else
+  git checkout -b release-${INPUT_VERSION}
+fi
 
 # Fix RST format
 sed '/^Forthcoming/,/[0-9]\+\.[0-9]\+\.[0-9]\+/{/^  /d}' \
