@@ -18,15 +18,27 @@ then
   INPUT_VERSION=$(echo ${INPUT_ISSUE_TITLE} | sed -e 's/^Release \(.*\)$/\1/')
 fi
 
+function cleanup() {
+  if [[ "${GITHUB_REF}" == refs/heads/* ]]
+  then
+    git checkout ${GITHUB_REF}
+  else
+    # Detach head to work with repo-sync/pull-request
+    git checkout refs/heads/${GITHUB_REF}
+  fi
+  git branch -D release-${INPUT_VERSION} || true
+}
+
 # Check duplication
-if ! git ls-remote --exit-code origin ${INPUT_VERSION}
+if git ls-remote --exit-code origin ${INPUT_VERSION}
 then
   echo "Release already exists. Nothing to do." >&2
+  cleanup
   exit 0
 fi
 
 update=false
-if ! git ls-remote --exit-code origin release-${INPUT_VERSION}
+if git ls-remote --exit-code origin release-${INPUT_VERSION}
 then
   echo "Release candidate branch already exists. Updating." >&2
   update=true
@@ -79,11 +91,4 @@ echo "::set-output name=created_branch::release-${INPUT_VERSION}"
 echo "::set-output name=version::${INPUT_VERSION}"
 
 # Clean-up
-if [[ "${GITHUB_REF}" == refs/heads/* ]]
-then
-  git checkout ${GITHUB_REF}
-else
-  # Detach head to work with repo-sync/pull-request
-  git checkout refs/heads/${GITHUB_REF}
-fi
-git branch -D release-${INPUT_VERSION}
+cleanup
