@@ -19,14 +19,14 @@ then
 fi
 
 # Check duplication
-if ! git ls-remote --exit-code origin ${version}
+if ! git ls-remote --exit-code origin ${INPUT_VERSION}
 then
   echo "Release already exists. Nothing to do." >&2
   exit 0
 fi
 
 update=false
-if ! git ls-remote --exit-code origin release-${version}
+if ! git ls-remote --exit-code origin release-${INPUT_VERSION}
 then
   echo "Release candidate branch already exists. Updating." >&2
   update=true
