@@ -55,14 +55,19 @@ git fetch --tags --prune --unshallow
 # Update CHANGELOG
 catkin_generate_changelog -y
 
-if update
+if ${update}
 then
   # Store updated CHANGELOGs
   git stash
 
   # Update release candidate branch
   git checkout release-${INPUT_VERSION}
-  git merge --no-edit ${GITHUB_REF}
+  if git merge --no-edit ${GITHUB_REF} | (grep "Already up to date.")
+  then
+    echo "Release already updated. Nothing to do." >&2
+    cleanup
+    exit 0
+  fi
 
   # Overwrite CHANGELOGs
   git checkout stash@{0} $(find . -name CHANGELOG.rst)
