@@ -51,3 +51,5 @@ jobs:
           pr_body: close \#${{ github.event.issue.number }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+See https://github.com/at-wat/mcl_3dl for the working example.
