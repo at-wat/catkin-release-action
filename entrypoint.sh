@@ -76,7 +76,7 @@ else
 fi
 
 # Fix RST format
-sed '/^Forthcoming/,/[0-9]\+\.[0-9]\+\.[0-9]\+/{/^  /d}' \
+sed '/^Forthcoming/,/^[0-9]\+\.[0-9]\+\.[0-9]\+/{/^  /d}' \
   -i $(find . -name CHANGELOG.rst)
 
 git add $(find . -name CHANGELOG.rst)
