@@ -46,8 +46,8 @@ fi
 
 # Setup
 echo -e "machine github.com\nlogin ${INPUT_GITHUB_TOKEN}" > ~/.netrc
-git config user.name ${INPUT_GIT_USER}
-git config user.email ${INPUT_GIT_EMAIL}
+git config user.name "${INPUT_GIT_USER}"
+git config user.email "${INPUT_GIT_EMAIL}"
 
 # Fetch all history to generate changelog
 git fetch --tags --prune --unshallow
