@@ -44,6 +44,9 @@ then
   update=true
 fi
 
+echo "::set-output name=created_branch::release-${INPUT_VERSION}"
+echo "::set-output name=version::${INPUT_VERSION}"
+
 # Setup
 echo -e "machine github.com\nlogin ${INPUT_GITHUB_TOKEN}" > ~/.netrc
 git config user.name "${INPUT_GIT_USER}"
@@ -91,9 +94,6 @@ git log ${GITHUB_REF}..HEAD
 
 # Push
 git push origin release-${INPUT_VERSION}
-
-echo "::set-output name=created_branch::release-${INPUT_VERSION}"
-echo "::set-output name=version::${INPUT_VERSION}"
 
 # Clean-up
 cleanup
