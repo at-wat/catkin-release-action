@@ -7,7 +7,7 @@ cd "${GITHUB_WORKSPACE}" \
 
 set -eu
 
-BRANCH_NAME=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+BRANCH_NAME=$(git branch --show-current)
 
 if [ ! -z "${INPUT_ISSUE_TITLE:-}" ]
 then
