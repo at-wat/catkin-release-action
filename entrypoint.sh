@@ -20,13 +20,8 @@ then
 fi
 
 function cleanup() {
-  if [[ "${BRANCH_NAME}" == refs/heads/* ]]
-  then
-    git checkout ${BRANCH_NAME}
-  else
-    # Detach head to work with repo-sync/pull-request
-    git checkout refs/heads/${BRANCH_NAME}
-  fi
+  # Detach head to work with repo-sync/pull-request
+  git checkout refs/heads/${BRANCH_NAME}
   git branch -D release-${INPUT_VERSION} || true
 }
 
