@@ -7,6 +7,7 @@ cd "${GITHUB_WORKSPACE}" \
 
 set -eu
 
+BRANCH_NAME=$(git branch --show-current)
 
 if [ ! -z "${INPUT_ISSUE_TITLE:-}" ]
 then
@@ -19,13 +20,8 @@ then
 fi
 
 function cleanup() {
-  if [[ "${GITHUB_REF}" == refs/heads/* ]]
-  then
-    git checkout ${GITHUB_REF}
-  else
-    # Detach head to work with repo-sync/pull-request
-    git checkout refs/heads/${GITHUB_REF}
-  fi
+  # Detach head to work with repo-sync/pull-request
+  git checkout refs/heads/${BRANCH_NAME}
   git branch -D release-${INPUT_VERSION} || true
 }
 
@@ -65,7 +61,7 @@ then
 
   # Update release candidate branch
   git checkout release-${INPUT_VERSION}
-  if git merge --no-edit ${GITHUB_REF} | (grep "Already up to date.")
+  if git merge --no-edit ${BRANCH_NAME} | (grep "Already up to date.")
   then
     echo "Release already updated. Nothing to do." >&2
     cleanup
@@ -90,7 +86,7 @@ catkin_prepare_release -y --no-push --version ${INPUT_VERSION}
 git tag -d ${INPUT_VERSION}
 
 # Show
-git log ${GITHUB_REF}..HEAD
+git log ${BRANCH_NAME}..HEAD
 
 # Push
 git push origin release-${INPUT_VERSION}
