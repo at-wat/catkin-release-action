@@ -7,7 +7,7 @@ cd "${GITHUB_WORKSPACE}" \
 
 set -eu
 
-BRANCH_NAME=$(git branch --show-current)
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 if [ ! -z "${INPUT_ISSUE_TITLE:-}" ]
 then
