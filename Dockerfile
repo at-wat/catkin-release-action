@@ -1,4 +1,4 @@
-FROM alpineros/alpine-ros:melodic-ros-core
+FROM ghcr.io/alpine-ros/alpine-ros:noetic-ros-core
 
 RUN apk add --no-cache \
   git \
