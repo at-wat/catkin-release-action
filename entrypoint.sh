@@ -40,8 +40,8 @@ then
   update=true
 fi
 
-echo "::set-output name=created_branch::release-${INPUT_VERSION}"
-echo "::set-output name=version::${INPUT_VERSION}"
+echo "created_branch=release-${INPUT_VERSION}" >> ${GITHUB_OUTPUT}
+echo "version=${INPUT_VERSION}" >> ${GITHUB_OUTPUT}
 
 # Setup
 echo -e "machine github.com\nlogin ${INPUT_GITHUB_TOKEN}" > ~/.netrc
