@@ -19,6 +19,12 @@ then
   INPUT_VERSION=$(echo ${INPUT_ISSUE_TITLE} | sed -e 's/^Release \(.*\)$/\1/')
 fi
 
+if ! [[ "${INPUT_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+then
+  echo "Unsupported version format: '${INPUT_VERSION}'. Version must be in 'number.number.number' format." >&2
+  exit 1
+fi
+
 function cleanup() {
   # Detach head to work with repo-sync/pull-request
   git checkout refs/heads/${BRANCH_NAME}
